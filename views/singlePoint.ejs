@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Point</title>
+
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  
+  <%- include("./components/navBar.ejs") %>
+
+  <h1>Single Point Iteration Method</h1>
+
+  <form action="">
+
+    <div>
+      <div>
+        <label for="f">Function i.e. f(x): </label>
+        <input type="text" name="f" id="f" required/>
+      </div>
+
+      <div>
+        <label for="unknown">Unknown Value: </label>
+        <select name="unknown" id="unknown">
+          <option value="x">X</option>
+          <option value="y">Y</option>
+          <option value="z">Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="oo">X<sub>0</sub>: </label>
+      <input type="number" name="xo" id="xo" required/>
+    </div>
+
+    <div>
+      <label for="iteration">Iteration: </label>
+      <input type="number" name="iteration" id="iteration" />
+    </div>
+
+    <button type="reset">Reset</button>
+    <button type="submit">Calculate</button>
+  </form>
+
+  <% if (table) { %>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>Iteration No.</th>
+            <th>X<sub>0</sub></th>
+            <th>f(X<sub>0</sub>)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i=0; i<table.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= table[i]['xovar'] %></td>
+              <td><%= table[i]['fxa'] %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+  <% } %>
+
+</body>
+</html>

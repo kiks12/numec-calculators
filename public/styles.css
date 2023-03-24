@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --header-color: rgb(11, 6, 58);
+  --bg-color: rgb(246, 246, 246);
+  --li-bg-color: rgba(210,210,210);
+  --border-radius: 0.7em;
+  --input-border: 0.5px solid lightgrey;
+  --reset-bg-color: rgb(210, 47, 47);
+  --submit-bg-color: rgb(11, 6, 58);
+  --button-border-radius: 0.4em;
+  --table-tr-alternate: rgb(171, 188, 237);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Raleway', sans-serif;
+}
+
+header {
+  background-color: var(--header-color);
+  height: 4em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
+  border-bottom: var(--input-border);
+  position: sticky;
+  top: 0;
+}
+
+header > * {
+  color: white;
+}
+
+header > ul > a  {
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  width: min(95%, 90em);
+  margin: 0 auto;
+
+}
+
+.upper-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upper-navbar > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.upper-navbar > ul > a {
+  padding: 0.5em 1.5em;
+}
+
+main {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  width: 80%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+  background-color: white;
+  border-radius: var(--border-radius);
+  width: 90%;
+}
+
+.label-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+input, select {
+  border: var(--input-border);
+  padding: 1em 0.5em;
+  width: 100%;
+}
+
+button {
+  padding: 0.8em 2.8em;
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+}
+
+button[type=reset] {
+  border: 0.5px solid var(--reset-bg-color);
+  color: var(--reset-bg-color);
+  background-color: transparent;
+}
+
+button[type=submit] {
+  border: 0.5px solid var(--submit-bg-color);
+  background-color: var(--submit-bg-color);
+  color: white;
+}
+
+.side-navbar-aside {
+  float: left;
+  height: 92.5vh;
+  position: sticky;
+  top: 4em;
+  background-color: white;
+}
+
+.side-navbar-container, .side-navbar-container > ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.side-navbar-container > ul > a {
+  text-decoration: none;
+}
+
+.side-navbar-container > ul > a > li{
+  padding: 1.5em 5em;
+  text-align: center;
+}
+
+.active {
+  background-color: var(--bg-color);
+}
+
+.eight-two {
+  display: flex;
+  align-items: center;
+}
+
+.eight-two > * {
+  width: 80%;
+}
+
+.eight-two > * + * {
+  width: 20%;
+  margin-left: 2em;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.button-container > * + * {
+  margin-left: 1em;
+}
+
+section {
+  float: left;
+  width: 80%;
+  background-color: red;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  /* width: 100%; */
+  /* background-color: red; */
+}
+
+table > thead > tr {
+  background-color: var(--header-color);
+  color: white;
+}
+
+table > thead > tr > th {
+  padding: 1.2em 0;
+}
+
+tr:nth-child(even) {
+  background-color: var(--table-tr-alternate);
+}
+
+td {
+  padding: 0.2em;
+  text-align: center;
+}

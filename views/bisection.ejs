@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bisection</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <%- include("./components/navBar.ejs") %>
+
+  <%- include("./components/sideNavbar.ejs") %>
+
+  <main >
+    <form action="">
+      <h1>Bisection Method</h1>
+      <br>
+
+      <div class="eight-two">
+        <div class="label-input-container">
+          <label for="f">Function i.e. f(x): </label>
+          <input type="text" name="f" id="f" required/>
+        </div>
+
+        <div>
+          <label for="unknown">Unknown Value: </label>
+          <br>
+          <select name="unknown" id="unknown">
+            <option value="x">X</option>
+            <option value="y">Y</option>
+            <option value="z">Z</option>
+          </select>
+        </div>
+      </div>
+
+      <br>
+      <div>
+        <div class="label-input-container">
+          <label for="Xl">X<sub>L</sub>: </label>
+          <input type="number" name="xl" id="xl" required/>
+        </div>
+        <br>
+        <div class="label-input-container">
+          <label for="Xr">X<sub>R</sub>: </label>
+          <input type="number" name="xr" id="xr" required/>
+        </div>
+      </div>
+
+      <br>
+      <div class="label-input-container">
+        <label for="iteration">Iteration: </label>
+        <input type="number" name="iteration" id="iteration" />
+      </div>
+
+      <br>
+      <div class="button-container">
+        <button type="reset">Reset</button>
+        <button type="submit">Calculate</button>
+      </div>
+    </form>
+  </main>
+
+  <% if (table) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Iteration No.</th>
+            <th>X<sub>L</sub></th>
+            <th>X<sub>R</sub></th>
+            <th>f(X<sub>L</sub>)</th>
+            <th>f(X<sub>R</sub>)</th>
+            <th>X<sub>m</sub></th>
+            <th>f(X<sub>m</sub>)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i=0; i<table.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= table[i]['xlvar'] %></td>
+              <td><%= table[i]['xrvar'] %></td>
+              <td><%= table[i]['fxla'] %></td>
+              <td><%= table[i]['fxra'] %></td>
+              <td><%= table[i]['xm'] %></td>
+              <td><%= table[i]['fxma'] %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+  <% } %>
+
+</body>
+</html>

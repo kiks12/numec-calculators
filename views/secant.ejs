@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secant</title>
+
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <%- include('./components/navbar.ejs') %>
+
+  <h1>Secant Method</h1>
+
+  <form action="">
+
+    <div>
+      <div>
+        <label for="f">Function i.e. f(x): </label>
+        <input type="text" name="f" id="f" required/>
+      </div>
+
+      <div>
+        <label for="unknown">Unknown Value: </label>
+        <select name="unknown" id="unknown">
+          <option value="x">X</option>
+          <option value="y">Y</option>
+          <option value="z">Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <label for="xa">X<sub>A</sub>: </label>
+        <input type="number" name="xa" id="xa" required/>
+      </div>
+      <div>
+        <label for="xb">X<sub>B</sub>: </label>
+        <input type="number" name="xb" id="xb" required/>
+      </div>
+    </div>
+
+    <div>
+      <label for="iteration">Iteration: </label>
+      <input type="number" name="iteration" id="iteration" />
+    </div>
+
+    <button type="reset">Reset</button>
+    <button type="submit">Calculate</button>
+
+  </form>
+
+  <% if (table) { %>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>Iteration No.</th>
+            <th>X<sub>A</sub></th>
+            <th>X<sub>B</sub></th>
+            <th>f(x<sub>A</sub>)</th>
+            <th>f(x<sub>B</sub>)</th>
+            <th>X<sub>C</sub></th>
+            <th>f(x<sub>C</sub>)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i=0; i<table.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= table[i]['xavar'] %></td>
+              <td><%= table[i]['xbvar'] %></td>
+              <td><%= table[i]['fxaa'] %></td>
+              <td><%= table[i]['fxba'] %></td>
+              <td><%= table[i]['xPlusOne'] %></td>
+              <td><%= table[i]['fxPlusOneA'] %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+  <% } %>
+  
+</body>
+</html>
