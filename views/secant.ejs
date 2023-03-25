@@ -13,75 +13,125 @@
 
   <%- include('./components/navbar.ejs') %>
 
-  <h1>Secant Method</h1>
+  <%- include('./components/sideNavbar.ejs') %>
 
-  <form action="">
+  <main>
+    <form action="">
+      <h1>Secant Method</h1>
+      <br>
 
-    <div>
-      <div>
-        <label for="f">Function i.e. f(x): </label>
-        <input type="text" name="f" id="f" required/>
+      <div class="eight-two">
+        <div class="label-input-container">
+          <label for="f">Function i.e. f(x): </label>
+          <input type="text" name="f" id="f" required/>
+        </div>
+
+        <div>
+          <label for="unknown">Unknown Value: </label>
+          <select name="unknown" id="unknown">
+            <option value="x">X</option>
+            <option value="y">Y</option>
+            <option value="z">Z</option>
+          </select>
+        </div>
       </div>
 
+      <br>
       <div>
-        <label for="unknown">Unknown Value: </label>
-        <select name="unknown" id="unknown">
-          <option value="x">X</option>
-          <option value="y">Y</option>
-          <option value="z">Z</option>
-        </select>
+        <div>
+          <label for="xa">X<sub>A</sub>: </label>
+          <input type="number" name="xa" id="xa" required/>
+        </div>
+        <br>
+        <div>
+          <label for="xb">X<sub>B</sub>: </label>
+          <input type="number" name="xb" id="xb" required/>
+        </div>
       </div>
-    </div>
 
-    <div>
+      <br>
       <div>
-        <label for="xa">X<sub>A</sub>: </label>
-        <input type="number" name="xa" id="xa" required/>
+        <label for="iteration">Iteration: </label>
+        <input type="number" name="iteration" id="iteration" />
       </div>
-      <div>
-        <label for="xb">X<sub>B</sub>: </label>
-        <input type="number" name="xb" id="xb" required/>
+
+      <br>
+      <div class="button-container">
+        <% if (table) { %>
+          <a href="/secant">
+            <button type="button">Clear</button>
+          </a>
+        <% } %>
+        <button type="reset">Reset</button>
+        <button type="submit">Calculate</button>
       </div>
-    </div>
 
-    <div>
-      <label for="iteration">Iteration: </label>
-      <input type="number" name="iteration" id="iteration" />
-    </div>
+    </form>
 
-    <button type="reset">Reset</button>
-    <button type="submit">Calculate</button>
-
-  </form>
+    <% if (table) { %>
+      <div class="graph-container">
+        <canvas id="myChart"></canvas>
+      </div>    
+    <% } %>
+  </main>
 
   <% if (table) { %>
-    <section>
-      <table>
-        <thead>
-          <tr>
-            <th>Iteration No.</th>
-            <th>X<sub>A</sub></th>
-            <th>X<sub>B</sub></th>
-            <th>f(x<sub>A</sub>)</th>
-            <th>f(x<sub>B</sub>)</th>
-            <th>X<sub>C</sub></th>
-            <th>f(x<sub>C</sub>)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i=0; i<table.length; i++) { %>
+    <section class="solution-container">
+      <div class="solution-div">
+        <h2>SOLUTIONS</h2>
+        <br>
+        <% for (let i=0; i<table.length; i++) { %> 
+          <div class="solution">
+            <small>
+              <strong>
+                Iteration No. <%= i+1 %>
+              </strong>
+            </small>
+            <p>X<sub>A</sub> = <%= table[i]['xavar'] %></p>
+            <p>X<sub>B</sub> = <%= table[i]['xbvar'] %></p>
+            <p>f(X<sub>A</sub>) = <%= table[i]['fxa'] %></p>
+            <p>f(X<sub>A</sub>) = <%= table[i]['fxaa'] %></p>
+            <p>f(X<sub>B</sub>) = <%= table[i]['fxb'] %></p>
+            <p>f(X<sub>B</sub>) =  <%= table[i]['fxba'] %></p>
+            <br>
+            <p>X<sub>C</sub> =  <%= table[i]['XPLUSONE_FORMULA'] %></p>
+            <p>X<sub>C</sub> =  <%= table[i]['xPlusOne'] %></p>
+            <p>f(X<sub>C</sub>) =  <%= table[i]['fxPlusOne'] %></p>
+            <p>f(X<sub>C</sub>) =  <%= table[i]['fxPlusOneA'] %></p>
+          </div>
+          <% }%>
+      </div>
+
+      <div class="solution-div">
+        <h2>TABLE</h2>
+        <br>
+        <table>
+          <thead>
             <tr>
-              <td><%= i+1 %></td>
-              <td><%= table[i]['xavar'] %></td>
-              <td><%= table[i]['xbvar'] %></td>
-              <td><%= table[i]['fxaa'] %></td>
-              <td><%= table[i]['fxba'] %></td>
-              <td><%= table[i]['xPlusOne'] %></td>
-              <td><%= table[i]['fxPlusOneA'] %></td>
+              <th>Iteration No.</th>
+              <th>X<sub>A</sub></th>
+              <th>X<sub>B</sub></th>
+              <th>f(x<sub>A</sub>)</th>
+              <th>f(x<sub>B</sub>)</th>
+              <th>X<sub>C</sub></th>
+              <th>f(x<sub>C</sub>)</th>
             </tr>
-          <% } %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% for (let i=0; i<table.length; i++) { %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= table[i]['xavar'] %></td>
+                <td><%= table[i]['xbvar'] %></td>
+                <td><%= table[i]['fxaa'] %></td>
+                <td><%= table[i]['fxba'] %></td>
+                <td><%= table[i]['xPlusOne'] %></td>
+                <td><%= table[i]['fxPlusOneA'] %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </section>
   <% } %>
   

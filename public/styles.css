@@ -72,11 +72,16 @@ header > ul > a  {
 main {
   float: left;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 1em;
-  width: 80%;
+  width: 82%;
+  height: 65vh;
+}
+
+main > * + * {
+  margin-left: 1em;
 }
 
 form {
@@ -85,7 +90,16 @@ form {
   padding: 3em;
   background-color: white;
   border-radius: var(--border-radius);
-  width: 90%;
+  width: 60%;
+  height: 100%;
+}
+
+.graph-container {
+  width: 39.5%;
+  height: 100%;
+  background-color: white;
+  padding: 3em;
+  border-radius: var(--border-radius);
 }
 
 .label-input-container {
@@ -168,19 +182,12 @@ button[type=submit] {
   margin-left: 1em;
 }
 
-section {
+.table-container {
   float: left;
-  width: 80%;
-  background-color: red;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 table {
-  /* width: 100%; */
-  /* background-color: red; */
+  width: 100%;
 }
 
 table > thead > tr {
@@ -199,4 +206,27 @@ tr:nth-child(even) {
 td {
   padding: 0.2em;
   text-align: center;
+}
+
+.solution-container {
+  width: 82%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1em;
+}
+
+.solution-div {
+  background-color: white;
+  padding: 3em;
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+.solution-div:nth-child(2) {
+  margin-top: 1em;
+}
+
+.solution {
+  margin: 0.5em 0;
 }

@@ -14,7 +14,11 @@ app.set("view engine", "ejs");
 // BISECTION METHOD 
 app.get("/bisection", (req, res) => {
   const { f, unknown, xl, xr, iteration } = req.query;
-  if (!(f && unknown && xl && xr && iteration)) return res.render("bisection", { table: undefined });
+  if (!(f && unknown && xl && xr && iteration)) return res.render("bisection", 
+  { 
+    table: undefined,
+    active: "BISECTION"
+  });
 
   const table = [];
   let xlvar = parseInt(xl);
@@ -32,9 +36,12 @@ app.get("/bisection", (req, res) => {
     table.push({
       xlvar,
       xrvar,
+      fxl,
+      fxr,
       fxla,
       fxra,
       xm,
+      fxm,
       fxma,
     });
 
@@ -42,7 +49,7 @@ app.get("/bisection", (req, res) => {
     if (fxma > 0) xlvar = xm;
   }
 
-  res.render("bisection", { table });
+  res.render("bisection", { table, active: "BISECTION" });
 })
 
 
@@ -51,7 +58,11 @@ app.get("/bisection", (req, res) => {
 app.get("/false-position", (req, res) => {
   let XM_FORMULA = "((-(fxl)*(xl-xr))/(fxl-fxr)) + xl";
   const { f, unknown, xl, xr, iteration } = req.query;
-  if (!(f && unknown && xl && xr && iteration)) return res.render("falsePosition", { table: undefined });
+  if (!(f && unknown && xl && xr && iteration)) return res.render("falsePosition",
+    { 
+      table: undefined,
+      active: "FALSE_POSITION",
+    });
 
   const table = [];
   let xlvar = parseInt(xl);
@@ -75,9 +86,12 @@ app.get("/false-position", (req, res) => {
     table.push({
       xlvar,
       xrvar,
+      fxl,
       fxla,
+      fxr,
       fxra,
       xm,
+      fxm,
       fxma,
     });
 
@@ -86,7 +100,7 @@ app.get("/false-position", (req, res) => {
     XM_FORMULA = copy;
   }
 
-  res.render("falsePosition", { table });
+  res.render("falsePosition", { table, active: "FALSE_POSITION" });
 })
 
 
@@ -94,7 +108,11 @@ app.get("/false-position", (req, res) => {
 // SINGLE POINT METHOD
 app.get("/single-point/", (req, res) => {
   const { f, unknown, xo, iteration } = req.query;
-  if (!(f && unknown && xo && iteration)) return res.render("singlePoint", { table: undefined });
+  if (!(f && unknown && xo && iteration)) return res.render("singlePoint", 
+    { 
+      table: undefined,
+      active: "SINGLE_POINT",
+    });
 
   const table = [];
   let xovar = parseInt(xo);
@@ -105,20 +123,21 @@ app.get("/single-point/", (req, res) => {
 
     table.push({
       xovar,
+      fx,
       fxa,
     })
 
     xovar = fxa;
   }
 
-  res.render("singlePoint", { table });
+  res.render("singlePoint", { table, active: "SINGLE_POINT" });
 })
 
 
 
 // FIXED PPINT METHOD
 app.get("/fixed-point/", (req, res) => {
-  res.render("fixedPoint", { table: undefined });
+  res.render("fixedPoint", { table: undefined, active: "FIXED_POINT" });
 })
 
 
@@ -127,7 +146,11 @@ app.get("/fixed-point/", (req, res) => {
 app.get("/secant/", (req, res) => {
   let XPLUSONE_FORMULA = "xb-(fxb*(xa-xb)/(fxa-fxb))";
   const { f, unknown, xa, xb, iteration } = req.query;
-  if (!(f && unknown && xa && xb && iteration)) return res.render("secant", { table: undefined });
+  if (!(f && unknown && xa && xb && iteration)) return res.render("secant", 
+    { 
+      table: undefined,
+      active: "SECANT",
+    });
 
   const table = [];
   let xavar = parseInt(xa);
@@ -147,22 +170,26 @@ app.get("/secant/", (req, res) => {
     const fxPlusOne = f.replaceAll(unknown, xPlusOne);
     const fxPlusOneA = math.evaluate(fxPlusOne);
 
-    XPLUSONE_FORMULA = copy;
-
     table.push({
       xavar,
       xbvar,
+      fxa,
       fxaa,
+      fxb,
       fxba,
+      XPLUSONE_FORMULA,
       xPlusOne,
+      fxPlusOne,
       fxPlusOneA,
     });
+
+    XPLUSONE_FORMULA = copy;
 
     xavar = xbvar;
     xbvar = xPlusOne;
   }
 
-  res.render("secant", { table });
+  res.render("secant", { table, active: "SECANT" });
 })
 
 
@@ -170,7 +197,11 @@ app.get("/secant/", (req, res) => {
 // NEWTON-RAPHSON METHOD
 app.get("/newton-raphson/", (req, res) => {
   const { f, unknown, xo, iteration } = req.query;
-  if (!(f && unknown && xo && iteration)) return res.render("newtonRaphson", { table: undefined });
+  if (!(f && unknown && xo && iteration)) return res.render("newtonRaphson", 
+  { 
+    table: undefined,
+    active: "NEWTON_RAPHSON",
+  });
 
   const table = [];
   let xovar = parseInt(xo);
@@ -187,16 +218,20 @@ app.get("/newton-raphson/", (req, res) => {
 
     table.push({
       xovar,
-      fxoa, 
+      fxo,
+      fxoa,
+      dfx, 
+      dfxo,
       dfxoa, 
       xn,
+      fxn,
       fxna
     });
 
     xovar = xn;
   }
 
-  res.render("newtonRaphson", { table });
+  res.render("newtonRaphson", { table, active: "NEWTON_RAPHSON" });
 })
 
 app.get("/", (req, res) => {

@@ -7,6 +7,9 @@
   <title>Bisection</title>
 
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 </head>
 <body>
 
@@ -27,7 +30,6 @@
 
         <div>
           <label for="unknown">Unknown Value: </label>
-          <br>
           <select name="unknown" id="unknown">
             <option value="x">X</option>
             <option value="y">Y</option>
@@ -57,41 +59,114 @@
 
       <br>
       <div class="button-container">
+        <% if (table) { %>
+          <a href="/bisection">
+            <button type="button">Clear</button>
+          </a>
+        <% } %>
         <button type="reset">Reset</button>
         <button type="submit">Calculate</button>
       </div>
     </form>
+
+    <% if (table) { %>
+      <div class="graph-container">
+        <canvas id="myChart"></canvas>
+      </div>    
+    <% } %>
   </main>
 
   <% if (table) { %>
-      <table>
-        <thead>
-          <tr>
-            <th>Iteration No.</th>
-            <th>X<sub>L</sub></th>
-            <th>X<sub>R</sub></th>
-            <th>f(X<sub>L</sub>)</th>
-            <th>f(X<sub>R</sub>)</th>
-            <th>X<sub>m</sub></th>
-            <th>f(X<sub>m</sub>)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i=0; i<table.length; i++) { %>
+    <section class="solution-container">
+      <div class="solution-div">
+        <h2>SOLUTIONS</h2>
+        <br>
+        <% for (let i=0; i<table.length; i++) { %> 
+          <div class="solution">
+            <small>
+              <strong>
+                Iteration No. <%= i+1 %>
+              </strong>
+            </small>
+            <p>X<sub>L</sub> = <%= table[i]['xlvar'] %></p>
+            <p>X<sub>R</sub> = <%= table[i]['xrvar'] %></p>
+            <p>f(X<sub>L</sub>) = <%= table[i]['fxl'] %></p>
+            <p>f(X<sub>L</sub>) = <%= table[i]['fxla'] %></p>
+            <p>f(X<sub>R</sub>) = <%= table[i]['fxr'] %></p>
+            <p>f(X<sub>R</sub>) =  <%= table[i]['fxra'] %></p>
+            <br>
+            <p>X<sub>m</sub> =  <%= table[i]['xm'] %></p>
+            <p>f(X<sub>m</sub>) =  <%= table[i]['fxm'] %></p>
+            <p>f(X<sub>m</sub>) =  <%= table[i]['fxma'] %></p>
+          </div>
+        <% }%>
+      </div>
+
+      <div class="solution-div">
+        <h2>TABLE</h2>
+        <br>
+        <table>
+          <thead>
             <tr>
-              <td><%= i+1 %></td>
-              <td><%= table[i]['xlvar'] %></td>
-              <td><%= table[i]['xrvar'] %></td>
-              <td><%= table[i]['fxla'] %></td>
-              <td><%= table[i]['fxra'] %></td>
-              <td><%= table[i]['xm'] %></td>
-              <td><%= table[i]['fxma'] %></td>
+              <th>Iteration No.</th>
+              <th>X<sub>L</sub></th>
+              <th>X<sub>R</sub></th>
+              <th>f(X<sub>L</sub>)</th>
+              <th>f(X<sub>R</sub>)</th>
+              <th>X<sub>m</sub></th>
+              <th>f(X<sub>m</sub>)</th>
             </tr>
-          <% } %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% for (let i=0; i<table.length; i++) { %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= table[i]['xlvar'] %></td>
+                <td><%= table[i]['xrvar'] %></td>
+                <td><%= table[i]['fxla'] %></td>
+                <td><%= table[i]['fxra'] %></td>
+                <td><%= table[i]['xm'] %></td>
+                <td><%= table[i]['fxma'] %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </section>
   <% } %>
 
 </body>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [
+        {
+          label: 'Estimated Value',
+          data: [
+            {x: -4, y: 5.84},
+            {x: -4, y: 5.84},
+            {x:	-4, y: 5.84},
+            {x: -3.5, y: 2.09},
+            {x: -2, y: -6.16},
+            {x: -3, y: -1.1600000000000001},
+            {x: -3, y: -1.1600000000000001},
+          ],
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
 </html>

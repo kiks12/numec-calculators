@@ -10,34 +10,70 @@
   <nav class="side-navbar-container">
     <ul>
       <a href="/bisection">
-        <li class="active">
-            Bisection
-        </li>
+        <% if (active == "BISECTION") { %>
+          <li class="active">
+              Bisection
+          </li>
+        <% } else { %>
+          <li>
+              Bisection
+          </li>
+        <% } %>
       </a>
       <a href="/false-position">
-        <li>
-            False-Position
-        </li>
+        <% if (active == "FALSE_POSITION") { %>
+          <li class="active">
+              False-Position
+          </li>
+        <% } else { %>
+          <li>
+              False-Position
+          </li>
+        <% } %>
       </a>
       <a href="/single-point">
-        <li>
-            Single-Point 
-        </li>
+        <% if (active == "SINGLE_POINT") { %>
+          <li class="active">
+              Single-Point
+          </li>
+        <% } else { %>
+          <li>
+              Single-Point
+          </li>
+        <% } %>
       </a>
       <a href="/fixed-point">
-        <li>
-            Fixed-Point 
-        </li>
+        <% if (active == "FIXED_POINT") { %>
+          <li class="active">
+              Fixed-Point
+          </li>
+        <% } else { %>
+          <li>
+              Fixed-Point
+          </li>
+        <% } %>
       </a>
       <a href="/secant">
-        <li>
-            Secant 
-        </li>
+        <% if (active == "SECANT") { %>
+          <li class="active">
+              Secant
+          </li>
+        <% } else { %>
+          <li>
+              Secant
+          </li>
+        <% } %>
       </a>
       <a href="/newton-raphson">
-        <li>
-            Newton-Raphson
-        </li>
+        <% if (active == "NEWTON_RAPHSON") { %>
+          <li class="active">
+              Newton-Raphson
+          </li>
+        <% } else { %>
+          <li>
+              Newton-Raphson
+          </li>
+        <% } %>
       </a>
     </ul>
   </nav>
