@@ -239,6 +239,10 @@ app.get("/", (req, res) => {
   res.redirect("/bisection");
 })
 
+app.get("/about", (req, res) => {
+  res.render("about");
+})
+
 
 
 app.listen(PORT, () => console.log(`NUMERICAL METHOD CALCULATOR: Running at port ${PORT}`));

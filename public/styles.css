@@ -41,7 +41,7 @@ header > * {
   color: white;
 }
 
-header > ul > a  {
+header > nav > ul > a  {
   color: white;
   text-decoration: none;
 }
