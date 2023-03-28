@@ -52,7 +52,7 @@
       <br>
       <div>
         <label for="iteration">Iteration: </label>
-        <input type="number" name="iteration" id="iteration" />
+        <input type="number" name="iteration" id="iteration" required/>
       </div>
 
       <br>
@@ -67,12 +67,6 @@
       </div>
 
     </form>
-
-    <% if (table) { %>
-      <div class="graph-container">
-        <canvas id="myChart"></canvas>
-      </div>    
-    <% } %>
   </main>
 
   <% if (table) { %>
