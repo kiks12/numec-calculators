@@ -58,8 +58,16 @@
         <button type="reset">Reset</button>
         <button type="submit">Calculate</button>
       </div>
-
     </form>
+
+    <% if (table) { %> 
+      <div class="graph-container">
+        <h2>GRAPH</h2>
+        <div class="graph-img-container">
+          <img src="graph.png" alt="graph">
+        </div>
+      </div> 
+    <% } %>
   </main>
 
   <% if (table) { %> 
@@ -104,7 +112,7 @@
             <% for (let i=0; i<table.length; i++) { %> 
               <tr>
                 <td><%= i+1 %></td>
-                <td><%= table[i]['xo'] %></td>
+                <td><%= table[i]['xovar'] %></td>
                 <td><%= table[i]['fxoa'] %></td>
                 <td><%= table[i]['dfxoa'] %></td>
                 <td><%= table[i]['xn'] %></td>

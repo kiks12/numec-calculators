@@ -65,6 +65,15 @@
         <button type="submit">Calculate</button>
       </div>
     </form>
+
+    <% if (table) { %> 
+      <div class="graph-container">
+        <h2>GRAPH</h2>
+        <div class="graph-img-container">
+          <img src="graph.png" alt="graph">
+        </div>
+      </div> 
+    <% } %>
   </main>
 
   <% if (table) { %>

@@ -3,6 +3,8 @@
 const express = require("express");
 const path = require("path");
 const math = require("mathjs");
+const fs = require("fs/promises");
+const { spawnSync } = require("child_process");
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -10,15 +12,21 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
+const clearFiles = async () => {
+  await fs.writeFile('./left.csv', '');
+  await fs.writeFile('./right.csv', '');
+  await fs.writeFile('./xm.csv', '');
+}
 
-// BISECTION METHOD 
-app.get("/bisection", (req, res) => {
+app.get("/bisection", async (req, res) => {
   const { f, unknown, xl, xr, iteration } = req.query;
   if (!(f && unknown && xl && xr && iteration)) return res.render("bisection", 
   { 
     table: undefined,
     active: "BISECTION"
   });
+
+  clearFiles();
 
   const table = [];
   let xlvar = parseInt(xl);
@@ -45,17 +53,28 @@ app.get("/bisection", (req, res) => {
       fxma,
     });
 
+    if (i === 0) {
+      await fs.appendFile('./left.csv', 'x,fx\n');
+      await fs.appendFile('./right.csv', 'x,fx\n');
+      await fs.appendFile('./xm.csv', 'x,fx\n');
+    }
+
+    await fs.appendFile("./left.csv", `${xlvar},${fxla}\n`);
+    await fs.appendFile("./right.csv", `${xrvar},${fxra}\n`);
+    await fs.appendFile("./xm.csv", `${xm},${fxma}\n`);
+
     if (fxma < 0) xrvar = xm;
     if (fxma > 0) xlvar = xm;
   }
 
+  await spawnSync("./venv/bin/python3", ["index.py"]);
   res.render("bisection", { table, active: "BISECTION" });
 })
 
 
 
 // FALSE POSITION METHOD
-app.get("/false-position", (req, res) => {
+app.get("/false-position", async (req, res) => {
   let XM_FORMULA = "((-(fxl)*(xl-xr))/(fxl-fxr)) + xl";
   const { f, unknown, xl, xr, iteration } = req.query;
   if (!(f && unknown && xl && xr && iteration)) return res.render("falsePosition",
@@ -63,6 +82,8 @@ app.get("/false-position", (req, res) => {
       table: undefined,
       active: "FALSE_POSITION",
     });
+
+  clearFiles();
 
   const table = [];
   let xlvar = parseInt(xl);
@@ -95,10 +116,22 @@ app.get("/false-position", (req, res) => {
       fxma,
     });
 
+    if (i === 0) {
+      await fs.appendFile('./left.csv', 'x,fx\n');
+      await fs.appendFile('./right.csv', 'x,fx\n');
+      await fs.appendFile('./xm.csv', 'x,fx\n');
+    }
+
+    await fs.appendFile("./left.csv", `${xlvar},${fxla}\n`);
+    await fs.appendFile("./right.csv", `${xrvar},${fxra}\n`);
+    await fs.appendFile("./xm.csv", `${xm},${fxma}\n`);
+
     if (fxma < 0) xrvar = xm;
     if (fxma > 0) xlvar = xm;
     XM_FORMULA = copy;
   }
+
+  await spawnSync("./venv/bin/python3", ["index.py"]);
 
   res.render("falsePosition", { table, active: "FALSE_POSITION" });
 })
@@ -106,13 +139,15 @@ app.get("/false-position", (req, res) => {
 
 
 // SINGLE POINT METHOD
-app.get("/single-point/", (req, res) => {
+app.get("/single-point/", async (req, res) => {
   const { f, unknown, xo, iteration } = req.query;
   if (!(f && unknown && xo && iteration)) return res.render("singlePoint", 
     { 
       table: undefined,
       active: "SINGLE_POINT",
     });
+
+  clearFiles();
 
   const table = [];
   let xovar = parseInt(xo);
@@ -127,9 +162,19 @@ app.get("/single-point/", (req, res) => {
       fxa,
     })
 
+    if (i === 0) {
+      await fs.appendFile('./left.csv', 'x,fx\n');
+      await fs.appendFile('./right.csv', 'x,fx\n');
+      await fs.appendFile('./xm.csv', 'x,fx\n');
+    }
+
+    await fs.appendFile("./left.csv", `${xovar},${fxa}\n`);
+    // await fs.appendFile("./right.csv", `${xrvar},${fxra}\n`);
+
     xovar = fxa;
   }
 
+  await spawnSync("./venv/bin/python3", ["index.py"]);
   res.render("singlePoint", { table, active: "SINGLE_POINT" });
 })
 
@@ -143,7 +188,7 @@ app.get("/fixed-point/", (req, res) => {
 
 
 // SECANT METHOD
-app.get("/secant/", (req, res) => {
+app.get("/secant/", async (req, res) => {
   let XPLUSONE_FORMULA = "xb-(fxb*(xa-xb)/(fxa-fxb))";
   const { f, unknown, xa, xb, iteration } = req.query;
   if (!(f && unknown && xa && xb && iteration)) return res.render("secant", 
@@ -151,6 +196,8 @@ app.get("/secant/", (req, res) => {
       table: undefined,
       active: "SECANT",
     });
+
+  clearFiles();
 
   const table = [];
   let xavar = parseInt(xa);
@@ -183,25 +230,38 @@ app.get("/secant/", (req, res) => {
       fxPlusOneA,
     });
 
+    if (i === 0) {
+      await fs.appendFile('./left.csv', 'x,fx\n');
+      await fs.appendFile('./right.csv', 'x,fx\n');
+      await fs.appendFile('./xm.csv', 'x,fx\n');
+    }
+
+    await fs.appendFile("./left.csv", `${xavar},${fxaa}\n`);
+    await fs.appendFile("./right.csv", `${xbvar},${fxba}\n`);
+    await fs.appendFile("./xm.csv", `${xPlusOne},${fxPlusOneA}\n`);
+
     XPLUSONE_FORMULA = copy;
 
     xavar = xbvar;
     xbvar = xPlusOne;
   }
 
+  await spawnSync("./venv/bin/python3", ["index.py"]);
   res.render("secant", { table, active: "SECANT" });
 })
 
 
 
 // NEWTON-RAPHSON METHOD
-app.get("/newton-raphson/", (req, res) => {
+app.get("/newton-raphson/", async (req, res) => {
   const { f, unknown, xo, iteration } = req.query;
   if (!(f && unknown && xo && iteration)) return res.render("newtonRaphson", 
   { 
     table: undefined,
     active: "NEWTON_RAPHSON",
   });
+
+  clearFiles();
 
   const table = [];
   let xovar = parseInt(xo);
@@ -228,9 +288,19 @@ app.get("/newton-raphson/", (req, res) => {
       fxna
     });
 
+    if (i === 0) {
+      await fs.appendFile('./left.csv', 'x,fx\n');
+      await fs.appendFile('./right.csv', 'x,fx\n');
+      await fs.appendFile('./xm.csv', 'x,fx\n');
+    }
+
+    await fs.appendFile("./left.csv", `${xovar},${fxoa}\n`);
+    await fs.appendFile("./xm.csv", `${xn},${fxna}\n`);
+
     xovar = xn;
   }
 
+  await spawnSync("./venv/bin/python3", ["index.py"]);
   res.render("newtonRaphson", { table, active: "NEWTON_RAPHSON" });
 })
 
